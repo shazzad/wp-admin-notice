@@ -8,7 +8,7 @@ Helper class to display admin notices.
 composer require shazzad/wp-admin-notice
 ```
 
-## Usage
+## Initialization
 
 Initialize the service provider.
 
@@ -65,8 +65,6 @@ do_action(
 	)
 );
 ```
-```
-
 
 ### Requirements
 
