@@ -16,7 +16,7 @@ Initialize the service provider.
 \Shazzad\WpAdminNotice\Provider::setup();
 ```
 
-## Adding screen notice.
+## Adding notice.
 
 Call the function `do_action` with appropriate parameter to add a notice.
 This code must be placed before wp admin area start rendering content on screen.
@@ -24,45 +24,46 @@ Use `admin_notices`, `all_admin_notices` or `network_admin_notices` action hook 
 
 ```php
 do_action(
-	'swpan_screen_notice',
+	'swpan_notice',
 	array(
-		'message' => __('You setting is stored successfully.'),
-		'type'    => 'success',
-		'id'      => 'my-notice-id',
+		'success' => __('You setting is stored successfully.'),
+		'id'      => 'plugin-setting',
 	)
 );
 
 do_action(
-	'swpan_screen_notice',
+	'swpan_notice',
 	array(
-		'message' => __('Sorry, we could not save your settings.'),
-		'type'    => 'error',
-		'id'      => 'my-notice-id',
+		'error' => __('Sorry, we could not save your settings.'),
 	)
 );
 ```
 
 ## Adding user notice.
 
-Call the function `do_action` with appropriate parameter to add a notice.
+Use user notice when you perform some action and redirect the user to a page. The notice
+will be stored for until it is displayed to the user.
+Add a third parameter to the action hook to add a user notice.
 
 ```php
 do_action(
-	'swpan_user_notice',
+	'swpan_notice',
 	array(
 		'message' => __('You setting is stored successfully.'),
 		'type'    => 'success',
 		'id'      => 'my-notice-id',
-	)
+	),
+	'user'
 );
 
 do_action(
-	'swpan_user_notice',
+	'swpan_notice',
 	array(
 		'message' => __('Sorry, we could not save your settings.'),
 		'type'    => 'error',
 		'id'      => 'my-notice-id',
-	)
+	),
+	'user'
 );
 ```
 

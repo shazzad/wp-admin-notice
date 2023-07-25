@@ -18,8 +18,7 @@ class Provider {
 	 */
 	public static function setup() {
 		add_action( 'admin_notices', array( __CLASS__, 'display_notices' ), 9999 );
-		add_action( 'swpan_user_notice', array( __CLASS__, 'add_user_notice' ) );
-		add_action( 'swpan_screen_notice', array( __CLASS__, 'add_screen_notice' ), 10, 2 );
+		add_action( 'swpan_notice', array( __CLASS__, 'add_notice' ), 10, 2 );
 	}
 
 	/**
@@ -58,50 +57,17 @@ class Provider {
 	}
 
 	/**
-	 * Add a user notice.
-	 * 
-	 * @param array $data Notice data.
-	 * 
-	 * @return void
-	 */
-	public static function add_user_notice( $data ) {
-		if ( ! get_current_user_id() ) {
-			return;
-		}
-
-		// Allow to pass multiple notices at once.
-		if ( isset( $data[0] ) && is_array( $data[0] ) ) {
-			foreach ( $data as $notice ) {
-				static::add_user_notice( $notice );
-			}
-
-			return;
-		}
-
-		// Allow to pass notice text as first parameter without key.
-		if ( isset( $data[0] ) && is_string( $data[0] ) ) {
-			$data['message'] = $data[0];
-		}
-
-		$notice = static::prepare_notice( $data );
-
-		if ( false !== $notice ) {
-			add_user_meta( get_current_user_id(), static::USER_META_KEY, $notice );
-		}
-	}
-
-	/**
 	 * Add a screen notice.
 	 * 
 	 * @param array $data Notice data.
 	 * 
 	 * @return void
 	 */
-	public static function add_screen_notice( $data ) {
+	public static function add_notice( $data, $scope = 'screen' ) {
 		// Allow to pass multiple notices at once.
 		if ( isset( $data[0] ) && is_array( $data[0] ) ) {
 			foreach ( $data as $notice ) {
-				static::add_screen_notice( $notice );
+				static::add_notice( $notice, $scope );
 			}
 
 			return;
@@ -115,7 +81,11 @@ class Provider {
 		$notice = static::prepare_notice( $data );
 
 		if ( false !== $notice ) {
-			self::$notices[] = $data;
+			if ( $scope === 'screen' ) {
+				self::$notices[] = $notice;
+			} else if ( $scope === 'user' && get_current_user_id() ) {
+				add_user_meta( get_current_user_id(), static::USER_META_KEY, $notice );
+			}
 		}
 	}
 
