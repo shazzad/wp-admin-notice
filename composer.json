@@ -1,0 +1,22 @@
+{
+	"name": "shazzad/wp-admin-notice",
+	"description": "Library to add & display admin notices in WordPress",
+	"type": "wordpress-library",
+  "license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Shazzad Hossain Khan",
+			"email": "hello@shazzad.me"
+		}
+	],
+	"minimum-stability": "dev",
+	"autoload": {
+		"psr-4": {
+			"Shazzad\\WpAdminNotice\\": "src/"
+		}
+	},
+	"support": {
+		"issues": "https://github.com/shazzad/wp-admin-notice/issues",
+		"source": "https://github.com/shazzad/wp-admin-notice"
+	}
+}
