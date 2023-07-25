@@ -17,7 +17,7 @@ class Provider {
 	 * Setup the provider.
 	 */
 	public static function setup() {
-		add_action( 'admin_notices', array( __CLASS__, 'display_notices' ) );
+		add_action( 'admin_notices', array( __CLASS__, 'display_notices' ), 9999 );
 		add_action( 'swpan_user_notice', array( __CLASS__, 'add_user_notice' ) );
 		add_action( 'swpan_screen_notice', array( __CLASS__, 'add_screen_notice' ), 10, 2 );
 	}
