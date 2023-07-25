@@ -59,11 +59,20 @@ class Provider {
 	/**
 	 * Add a screen notice.
 	 * 
-	 * @param array $data Notice data.
+	 * @param array|string $data Notice data.
+	 * @param string $scope Notice scope. 'screen' or 'user'.
 	 * 
 	 * @return void
 	 */
 	public static function add_notice( $data, $scope = 'screen' ) {
+		// Allow to pass notice text as string without any key.
+		if ( is_string( $data ) ) {
+			$data = array(
+				'message' => $data,
+				'type'    => 'success',
+			);
+		}
+
 		// Allow to pass multiple notices at once.
 		if ( isset( $data[0] ) && is_array( $data[0] ) ) {
 			foreach ( $data as $notice ) {
